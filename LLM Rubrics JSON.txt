@@ -1,0 +1,257 @@
+{
+  "grading_policy": {
+    "description": "Grade only what’s demonstrably shown: code that runs end-to-end, clear outputs/screenshots, and a concise report. Combine autograder results (does it execute and produce required artifacts?) with manual judgment (clarity, correctness, depth of analysis). Apply the four levels consistently—Exceeds / Meets / Approaches / Missing mapped to 100 / 75 / 50 / 25% of each criterion’s weight—and favor reproducibility: no missing files, brittle paths, or hidden dependencies. If evidence is missing or unverifiable, assign the lower level."
+  },
+  "rubric": [
+    {
+      "section": "Environment Setup & Dependencies",
+      "weight": 15,
+      "criteria": [
+        {
+          "criterion": "Python env & libraries",
+          "weight": 5,
+          "levels": {
+            "excellent": "All dependencies installed; imports run without error.",
+            "proficient": "All dependencies installed; imports run without error.",
+            "basic": "Minor missing library/import, easily fixed.",
+            "inadequate": "Environment fails to run."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "Model download & placement",
+          "weight": 5,
+          "levels": {
+            "excellent": "Both models correctly placed and accessible in /labs/local_llm.",
+            "proficient": "Models downloaded but misplaced/misnamed.",
+            "basic": "Only one or incomplete model.",
+            "inadequate": "No usable models found."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "Model loading",
+          "weight": 5,
+          "levels": {
+            "excellent": "Model loads without error; run_llm('Hello') produces valid coherent response.",
+            "proficient": "Loads with minor warnings but produces output.",
+            "basic": "Loads partially with errors in generation.",
+            "inadequate": "Fails to load or crashes."
+          },
+          "autograde_possible": true
+        }
+      ]
+    },
+    {
+      "section": "Core Functions Implementation",
+      "weight": 30,
+      "criteria": [
+        {
+          "criterion": "chunk_text()",
+          "weight": 5,
+          "levels": {
+            "excellent": "Correct chunking & overlap; outputs usable segments.",
+            "proficient": "Minor overlap/size errors but mostly works.",
+            "basic": "Inconsistent splitting or incorrect overlap.",
+            "inadequate": "Missing or non-functional."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "llama_embed_text()",
+          "weight": 5,
+          "levels": {
+            "excellent": "Returns correct embeddings as np.ndarray with proper shape.",
+            "proficient": "Returns embeddings but with inconsistent shape/type.",
+            "basic": "Embeddings returned but with evident errors.",
+            "inadequate": "Missing or fails completely."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "Embedding loop / FAISS index",
+          "weight": 5,
+          "levels": {
+            "excellent": "All chunks embedded; FAISS index created and populated.",
+            "proficient": "Most chunks embedded; index partially populated.",
+            "basic": "Few chunks embedded or index corrupted.",
+            "inadequate": "No embeddings or FAISS integration."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "search_similar_chunks()",
+          "weight": 5,
+          "levels": {
+            "excellent": "Retrieves top-k relevant chunks with clear similarity logic.",
+            "proficient": "Retrieves chunks but sometimes irrelevant.",
+            "basic": "Results mostly irrelevant to query.",
+            "inadequate": "Function missing or fails."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "run_llm()",
+          "weight": 5,
+          "levels": {
+            "excellent": "Generates coherent, relevant responses to test prompts.",
+            "proficient": "Responses mostly coherent; minor weaknesses.",
+            "basic": "Incomplete or inconsistent responses.",
+            "inadequate": "No meaningful response."
+          },
+          "autograde_possible": false
+        },
+        {
+          "criterion": "run_llm_with_pdf_knowledge()",
+          "weight": 5,
+          "levels": {
+            "excellent": "Effectively integrates retrieved context in responses.",
+            "proficient": "Context partially integrated; some relevance.",
+            "basic": "Weak integration; context barely affects answer.",
+            "inadequate": "No integration attempted."
+          },
+          "autograde_possible": false
+        }
+      ]
+    },
+    {
+      "section": "PDF Context Integration",
+      "weight": 20,
+      "criteria": [
+        {
+          "criterion": "PDF extraction",
+          "weight": 5,
+          "levels": {
+            "excellent": ">500 chars extracted accurately from PDF.",
+            "proficient": "Text extracted but slightly incomplete.",
+            "basic": "Only partial/limited extraction.",
+            "inadequate": "Extraction fails or missing."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "PDF embeddings",
+          "weight": 5,
+          "levels": {
+            "excellent": "Embeddings generated for all text chunks.",
+            "proficient": "Most embeddings generated successfully.",
+            "basic": "Partial embeddings only.",
+            "inadequate": "No embeddings created."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "Query without context",
+          "weight": 5,
+          "levels": {
+            "excellent": "Shows LLM’s baseline knowledge limits clearly.",
+            "proficient": "Some limits visible but inconsistent.",
+            "basic": "Results unclear about LLM’s limitations.",
+            "inadequate": "Misleadingly confident or missing comparison."
+          },
+          "autograde_possible": false
+        },
+        {
+          "criterion": "Query with context",
+          "weight": 5,
+          "levels": {
+            "excellent": "Responses significantly improved with PDF context.",
+            "proficient": "Partial improvement visible.",
+            "basic": "Limited or unclear improvement.",
+            "inadequate": "No observable improvement."
+          },
+          "autograde_possible": false
+        }
+      ]
+    },
+    {
+      "section": "Reflection & Reporting",
+      "weight": 20,
+      "criteria": [
+        {
+          "criterion": "Setup summary",
+          "weight": 5,
+          "levels": {
+            "excellent": "Clear, complete, step-by-step documentation.",
+            "proficient": "Mostly clear; minor gaps.",
+            "basic": "Limited detail/clarity.",
+            "inadequate": "Missing or very unclear."
+          },
+          "autograde_possible": false
+        },
+        {
+          "criterion": "Difficulties/errors",
+          "weight": 5,
+          "levels": {
+            "excellent": "Thorough documentation of errors & solutions.",
+            "proficient": "Documents errors but not all solutions.",
+            "basic": "Mentions errors with no resolution.",
+            "inadequate": "No discussion of errors."
+          },
+          "autograde_possible": false
+        },
+        {
+          "criterion": "Query comparison",
+          "weight": 5,
+          "levels": {
+            "excellent": "Strong analysis of context vs. no-context differences.",
+            "proficient": "Adequate comparison; some insights.",
+            "basic": "Weak or superficial comparison.",
+            "inadequate": "No comparison provided."
+          },
+          "autograde_possible": false
+        },
+        {
+          "criterion": "Insights & applications",
+          "weight": 5,
+          "levels": {
+            "excellent": "Deep reflection on LLM limitations & healthcare use cases.",
+            "proficient": "Some relevant insights.",
+            "basic": "Surface-level or generic insights.",
+            "inadequate": "No meaningful reflection."
+          },
+          "autograde_possible": false
+        }
+      ]
+    },
+    {
+      "section": "Submission Quality",
+      "weight": 15,
+      "criteria": [
+        {
+          "criterion": "Notebook",
+          "weight": 5,
+          "levels": {
+            "excellent": "Runs end-to-end with clean outputs; reproducible.",
+            "proficient": "Minor execution/formatting issues.",
+            "basic": "Multiple errors, requires fixing to run.",
+            "inadequate": "Notebook incomplete/unusable."
+          },
+          "autograde_possible": true
+        },
+        {
+          "criterion": "Screenshots/outputs",
+          "weight": 5,
+          "levels": {
+            "excellent": "Clear, labeled screenshots/outputs included.",
+            "proficient": "Some outputs missing/unclear.",
+            "basic": "Outputs incomplete or poorly presented.",
+            "inadequate": "No outputs/screenshots."
+          },
+          "autograde_possible": false
+        },
+        {
+          "criterion": "Report formatting",
+          "weight": 5,
+          "levels": {
+            "excellent": "Well-structured, concise, within 1–2 pages.",
+            "proficient": "Clear but slightly long/short.",
+            "basic": "Formatting issues or unclear writing.",
+            "inadequate": "Report missing."
+          },
+          "autograde_possible": false
+        }
+      ]
+    }
+  ]
+}
